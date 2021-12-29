@@ -1,0 +1,20 @@
+/* # CONTENT
+================================================== */
+#wrapper {
+    position: relative;
+    @include transition (all .3s);
+}
+
+#container-page{
+    @extend .container;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#container-map{
+    position: relative;
+}
+
+#msnry{
+    margin: 0 auto;
+}

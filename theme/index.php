@@ -1,47 +1,83 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
+
 <?php get_header(); ?>
-<!--AREA DO CARROUSEL E DO TEXTO DE INFORMAÇÃO-->
-<div class="wrap-carrousel hidden-phone">
-    <div class="container row-wrap-carrousel">
-        <div class="row-fluid">
-            <!--CARROUSEL-->
-            <div id="carrousel" class="span8" data-intro='As atividades e projetos que são destaques estão aqui, á um clique do mouse.' data-step='3'>
-                <?php get_template_part( 'template-part/loop', 'slide' ); ?>
+
+<!-- LAST NEWS -->
+<section id="news-feed" class="owl-carousel">
+    <?php get_template_part( 'loop', 'post-index' ); ?>
+</section>
+
+<!-- TRENDING TOPICS -->
+<section id="trending">
+    <ul id="footer-tags">
+        <?php $tags = tags_popular('8', '120'); ?>
+        <?php if (!empty($tags)) { ?>
+        <?php foreach ((array)$tags as $tag): ?>
+            <li>
+                <a href="<?php echo get_tag_link ($tag->term_id); ?>" rel="tag" alt="<?php echo $tag->name; ?>" class="label label-gray label-trending">
+                    <?php echo $tag->name; ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+    <?php } ?>
+    </ul>
+    <a href="http://www.lojademolay.org.br/">
+        <img src="<?php bloginfo('template_directory'); ?>/assets/images/loja-demolay.png" alt="Loja DeMolay - SCODB">
+    </a>
+</section>
+
+<!-- FEATURES -->
+<main id="container-page" role="main">
+    <section id="msnry">
+        <?php
+        $featured = new WP_Query( array(
+            'post_type'      => 'featured-picture',
+            'posts_per_page' => -1,
+        ));
+        ?>
+        <?php if ( $featured->have_posts() ) : while ( $featured->have_posts() ) : $featured->the_post(); ?>
+            <?php
+            // THUMBNAIL
+            $thumbnail = get_field('thumbnail');
+            $thumbnail = wp_get_attachment_url( $thumbnail['id'],'full' );
+
+            // FORMATO
+            $formato = get_field('formato');
+            $formato = ($formato == '') ? '3' : $formato ;
+
+            // DESTINO
+            if (get_field('tipo_destino') == 'interno'){
+                $destino = get_field('destino_interno');
+                $destino = get_permalink( $destino->ID );
+            }else{
+                $destino = get_field('destino_externo');
+            }
+            if ($destino == '') $destino = '#';
+
+            // TARGET
+            $target = get_field('target');
+            $target = isset($target[0]) ? 'sim' : 'nao';
+            $target = $target == 'sim' ? ' target="_blank"' : '';
+            ?>
+
+            <div class="msnry-panel msnry-panel-<?php echo $formato; ?>">
+                <div class="panel panel-purple">
+                    <div class="panel-image">
+                        <a href="<?php echo $destino; ?>" <?php echo $target; ?>>
+                            <img src="<?php echo $thumbnail; ?>" class="img-responsive" alt="<?php the_title(); ?>">
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <div id="widget-inicial" class="span4 visible-desktop">
-                <?php
-                global $ClassPostTypeEventos;
-                $quantEventos = $ClassPostTypeEventos->getQuantEventosIndex()
-                ?>
-                <?php $args = 'before_widget=<div class="widget">&before_title=<div class="widget-titulo"><h4>&after_title=</h4></div>&after_widget=</div>'; ?>
-                <?php $instance = "title=Proximos Eventos&quant=$quantEventos"; ?>
-                <?php the_widget('Widget_eventos', $instance, $args); ?>
-                <?php  ?>
-            </div>
-        </div>
-    </div>
-</div>
+        <?php endwhile; else : ?>
+        <?php endif; ?>
+    </section>
+</main>
 
-<!--DESTAQUE-->
-<div class="container area-detaque hidden-phone">
-    <div class="row-fluid" data-intro='Sites paralelos, atividades e muitas informações que sabemos ser úteis estão aqui.' data-step='4'>
-        <?php get_template_part( 'template-part/loop', 'destaque' ); ?>
-    </div>
-</div>
+<!-- INSTAGRAM -->
+<section id="instagram">
+    <div id="instafeed"></div>
+</section>
 
-<div class="container">
-    <div class="row-fluid">
-
-        <!-- AREA ESQUERDA  ================================================== -->
-        <div class="span8">
-            <?php get_template_part( 'template-part/loop', 'noticias' ); ?>
-        </div>
-
-        <!-- AREA DIREITA   ================================================== -->
-        <div class="span4" data-intro='Aqui nessa barra lateral você vai sempre encontrar ferramentas úteis para o dia a dia.' data-step='6'>
-            <?php dynamic_sidebar('sidebar-principal'); ?>
-        </div>
-    </div>
-</div>
-<div id="instafeed" class="visible-desktop" data-intro='Vamos socializar, #SCODB no instagram. A maior fraternidade juvenil mudial.' data-step='7'></div>
 <?php get_footer(); ?>

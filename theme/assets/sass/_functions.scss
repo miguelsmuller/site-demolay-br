@@ -1,0 +1,50 @@
+/* # FUNCTIONS
+================================================== */
+
+//PADDING
+@mixin no-padding() {
+    padding: 0;
+}
+@mixin no-h-padding() {
+    padding-left: 0;
+    padding-right: 0;
+}
+@mixin no-v-padding() {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+@mixin padding($padding) {
+    padding: $padding;
+}
+@mixin h-padding($padding) {
+    padding-left: $padding;
+    padding-right: $padding;
+}
+@mixin v-padding($padding) {
+    padding-top: $padding;
+    padding-bottom: $padding;
+}
+
+//MARGIN
+@mixin no-margin() {
+    margin: 0;
+}
+@mixin no-h-margin() {
+    margin-left: 0;
+    margin-right: 0;
+}
+@mixin no-v-margin() {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+@mixin margin($margin) {
+    margin: $margin;
+}
+@mixin h-margin($margin) {
+    margin-left: $margin;
+    margin-right: $margin;
+}
+@mixin v-margin($margin) {
+    margin-top: $margin;
+    margin-bottom: $margin;
+}

@@ -1,95 +1,95 @@
-<?php
-/*
-Template Name: Search Page
-*/
-?>
+<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
+
 <?php get_header(); ?>
-<div class="container wrap">
+<main class="container" role="main">
     <div class="row">
 
-        <!-- AREA ESQUERDA  ================================================== -->
-        <div class="span8">
+        <section id="content" class="col-sm-12 col-md-9">
 
-            <div class="row-fluid main-content">
-            <div class="span12 box">
-            <div class="row-fluid">
-            <div class="span12">
+            <form action="<?php bloginfo('url'); ?>" method="get" accept-charset="utf-8" role="search" class="panel panel-default">
+                <div class="panel-heading">Opções de Busca avançada</div>
+                <div class="panel-body">
 
-                <?php
-                global $query_string;
+                    <div class="col-md-12">
+                        <input type="text" name="s" id="search" class="form-control" value="<?php the_search_query(); ?>" placeholder="Critério de pesquisa" />
+                    </div>
+                    <div class="col-md-12">
+                        <?php $query_types = get_query_var('post_type'); ?>
 
-                $query_args = explode("&", $query_string);
-                $search_query = array();
+                        <input type="checkbox" name="post_type[]" value="arquivo" <?php if (in_array('arquivo', $query_types)) { echo 'checked="checked"'; } ?> /><label>Arquivo</label>
+                        <input type="checkbox" name="post_type[]" value="post" <?php if (in_array('post', $query_types)) { echo 'checked="checked"'; } ?> /><label>Post</label>
+                        <input type="checkbox" name="post_type[]" value="page" <?php if (in_array('page', $query_types)) { echo 'checked="checked"'; } ?> /><label>Página</label>
+                        <input type="checkbox" name="post_type[]" value="evento" <?php if (in_array('evento', $query_types)) { echo 'checked="checked"'; } ?> /><label>Evento</label>
+                    </div>
 
-                foreach($query_args as $key => $string) {
-                    $query_split = explode("=", $string);
-                    $search_query[$query_split[0]] = urldecode($query_split[1]);
-                }
+                </div>
+                <div class="panel-footer">
+                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Procurar">
+                </div>
+            </form>
 
-                $search_query = array_merge( $search_query, array('posts_per_page' => -1) );
-                $search = new WP_Query($search_query);
-
+            <?php
                 global $wp_query;
                 $total_results = $wp_query->found_posts;
-                ?>
+            ?>
 
-                <h2 style="margin-bottom: 0;">Resultado da busca para "<?php the_search_query(); ?>"</h2>
-                <h5 style="padding-bottom: 0;"><?php echo $total_results; ?> itens encontrados</h5>
+            <header>
+                <h2>Resultado da busca para "<?php the_search_query(); ?>"</h2>
+                <h5><?php echo $total_results; ?> itens encontrados</h5>
+            </header>
 
-<div class="list_posts_samll">
+            <ol class="list-unstyled">
+                <?php if (have_posts()) : while (have_posts()) : the_post();  ?>
+                    <li>
+                        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-<?php if ($search->have_posts()) : while ($search->have_posts()) : $search->the_post();  ?>
-<div class="row-fluid item">
-    <?php
-    if( has_post_thumbnail() ){
-    ?>
-    <div class="span3">
-    <a href="<?php the_permalink() ?>">
-        <?php
-        $attr = array(
-            'class' => "img-rounded img-polaroid item",
+                            <header>
+                                <h4>[<?php echo ucfirst (get_post_type()); ?>] <?php get_the_title() ?><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h4>
+                            </header>
 
-        );
+                            <div class="entry-content">
+                                <?php the_excerpt(); ?>
+                                <p><a class="btn btn-primary" href="<?php the_permalink() ?>">Leia mais</a></p>
+                            </div>
 
-        echo the_post_thumbnail('thumbnail',$attr);
-        ?>
-    </a>
+                            <footer>
+                                <ul class="list-inline list-unstyled">
+                                    <li>
+                                        <i class="icon-user"></i> <a href="<?php echo get_author_posts_url(get_the_author_meta( 'ID' )); ?>"><?php the_author_meta( 'nickname' ); ?></a>
+                                    </li>
+                                    <li>
+                                        <i class="icon-calendar"></i> <?php the_time('d/m/Y'); ?>
+                                    </li>
+                                    <li>
+                                        <i class="icon-comment"></i> <a href="<?php comments_link(); ?>"><?php comments_number(); ?></a>
+                                    </li>
+                                    <li>
+                                        <i class="icon-tags"></i> Tags :
+                                        <?php
+                                        $posttags = get_the_tags();
+                                        if ($posttags) :
+                                            foreach($posttags as $tag) {
+                                                echo '<a href="'.get_tag_link($tag->term_id).'"><span class="label label-primary">'.$tag->name.'</span></a> ';
+                                            }
+                                        endif;
+                                        ?>
+                                    </li>
+                                </ul>
+                            </footer>
+                            <hr>
+
+                        </article>
+                    </li>
+                <?php endwhile; else: ?>
+                <?php endif; ?>
+            </ol>
+
+            <?php if ( function_exists( 'paginacao' ) ) paginacao(); ?>
+
+        </section>
+
+        <?php get_sidebar(); ?>
+
     </div>
-
-    <div class="span9">
-    <?php
-    }else{
-    ?>
-    <div class="span12">
-    <?php
-    }
-    ?>
-        <a href="<?php the_permalink() ?>"><h4>[<?php echo ucfirst (get_post_type()); ?>] <?php echo wp_trim_words( get_the_title(), 12, '' ) ?></h4></a>
-        <?php
-            remove_all_shortcodes('the_excerpt');
-            echo ('<a href="'. get_permalink() .'">[...]</a>');
-        ?>
-    </div>
-</div>
-
-<?php endwhile; else: ?>
-<?php endif; ?>
-
-</div>
-
-            </div>
-            </div>
-            </div>
-            </div>
-        </div>
-
-        <!-- AREA DIREITA   ================================================== -->
-        <div class="span4">
-            <?php $args = 'before_widget=<div class="widget">&before_title=<div class="widget-titulo"><h4>&after_title=</h4></div>&after_widget=</div>'; ?>
-            <?php $instance = 'title=Mais Publicações em:&tags=true&tags_quant=45&categorias=true&periodo=true'; ?>
-            <?php the_widget('ClassVejaMais', $instance, $args); ?>
-            <?php dynamic_sidebar('Sidebar Single'); ?>
-        </div>
-    </div>
-</div>
+</main>
 <?php get_footer(); ?>

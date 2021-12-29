@@ -1,133 +1,140 @@
-<?php global $ClassTheme; ?>
-<footer class="footer-big">
-    <div class="container">
-        <div class="row">
-            <div class="span4">
-                <div class="nome_scodb_footer"></div>
-                <div class="redesSociaisFooter visible-desktop">
-                    <a href="<?php bloginfo('rss_url'); ?>" target="_blank" class="social_icon rss" data-toggle="tooltip" data-original-title="Feed RSS"> </a>
-                    <?php                
-                    if ($ClassTheme->getFacebook() != ''){
-                    ?>
-                        <a href="<?php $ClassTheme->getFacebook('echo');?>" target="_blank" class="social_icon facebook" data-toggle="tooltip" data-original-title="Curta no Facebook"> </a>
-                    <?php
-                    }
-                    ?>
-                    <?php    
-                    if ($ClassTheme->getTwitter() != ''){
-                    ?>
-                        <a href="<?php $ClassTheme->getTwitter('echo');?>" target="_blank" class="social_icon twitter" data-toggle="tooltip" data-original-title="Siga no Twitter"> </a>
-                    <?php
-                    }
-                    ?>
-                    <?php
-                    if ($ClassTheme->getPlus() != ''){
-                    ?>
-                        <a href="<?php $ClassTheme->getPlus('echo');?>" target="_blank" class="social_icon plus" data-toggle="tooltip" data-original-title="Página no Plus"> </a>
-                    <?php
-                    }
-                    ?>
-                    <?php
-                    if ($ClassTheme->getLinkedin() != ''){
-                    ?>
-                        <a href="<?php $ClassTheme->getLinkedin('echo');?>" target="_blank" class="social_icon linkedin" data-toggle="tooltip" data-original-title="Algo no Linkedin"> </a>
-                    <?php
-                    }
-                    ?>
-                    <?php
-                    if ($ClassTheme->getYoutube() != ''){
-                    ?>
-                        <a href="<?php $ClassTheme->getYoutube('echo');?>" target="_blank" class="social_icon youtube" data-toggle="tooltip" data-original-title="Veja no youtube"> </a>
-                    <?php
-                    }
-                    ?>
-                    
-                </div>
-                <div class="endereco">
-                    <?php 
-                    $ClassTheme->getEndereco('echo');
-                    ?>
-                </div>
-            </div>
-            <div class="span4 visible-desktop">
-                <?php
-                    if ( has_nav_menu( 'menu-rodape' ) ) {                      
-                        $menuOptions = array(
-                            'theme_location'    => 'menu-rodape',
-                            'menu'              => '',
-                            'container'         => '',
-                            'container_id'      => '',
-                            'container_class'   => '',
-                            'menu_class'        => 'paginas',
-                            'menu_id'           => 'menu-rodape'            
-                        );
-                        wp_nav_menu($menuOptions);
-                    }else{}
-                ?>
-                
-            </div>
-            <div class="span4 hidden-phone">
-                <?php                
-                echo '<ul class="liderancas">';
-                    echo '<li>';
-                        echo '<h5>Grande Mestre Nacional' .'</h5>';
-                        echo '<span>'. $ClassTheme->getGMN('echo') .'</span>';
-                    echo '</li>';
-                    
-                    echo '<li>';
-                        echo '<h5>Mestre Conselheiro Nacional' .'</h5>';
-                        echo '<span>'. $ClassTheme->getMCN('echo') .'</span>';
-                    echo '</li>';
-                    
-                    echo '<li>';
-                        echo '<h5>Mestre Conselheiro Nacional Adjunto' .'</h5>';
-                        echo '<span>'. $ClassTheme->getMCNA('echo') .'</span>';
-                    echo '</li>';
-                echo '</ul>';
-                ?>
-            </div>
-        </div>
-    </div>
-</footer>
-<footer class="footer-small">
-    <div class="container">
-        <div class="row">
-            <div class="span8">
-                <p>Todos os direitos reservados ao Supremo Conselho da Ordem DeMolay para o Brasil. Este material não pode ser publicado, transmitido por broadcast, reescrito ou redistribuição sem prévia autorização.</p>
-            </div>
-            <a href="https://www.facebook.com/miguel.sneto" target="_blank"><div class="span2 offset2 desenvolvedor"></div></a>
-        </div>
-    </div>
-</footer>
-<?php 
-//if (!isset($_COOKIE['firsttime']) && $maintenance == 'false' && (is_home() || is_front_page())){
-if (!isset($_COOKIE['firsttime']) && (is_home() || is_front_page())){
-    
-    if (isset($opcoes_gerais['treinamento']) && $opcoes_gerais[ 'treinamento' ] == 1){
-        ?>
-        <div id="myModal" class="modal hide fade purple_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Temos novidades para você</h3>
-            </div>
-            <div class="modal-body">
-                <?php echo $opcoes_gerais[ 'texto_treinamento' ]; ?>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Não quero ver</button>
-                <button class="btn" href="javascript:void(0);" onclick="javascript:$('#myModal').modal('hide'); introJs().start();"><i class="icon-bolt"></i> Quero ver as novidades</button>
-            </div>
-        </div>
-        <script type="text/javascript">
-        $(function () {
-            $('#myModal').modal('show');
-        });
-        </script>
-        <?php
-    }
-}
-?>
+<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 
+<!-- FOOTER FIRST -->
+<footer id="footer-first">
+    <div class="container">
+        <div class="row">
+
+            <section class="footer-address">
+                <img src="<?php echo get_bloginfo( 'template_directory' ) ?>/assets/images/scodb-texto-rodape.png" alt="<?php bloginfo('name') ?>">
+
+                <ul class="social-icons animated-list">
+                    <li>
+                        <a href="<?php bloginfo('rss_url'); ?>" target="_blank" data-toggle="tooltip" data-original-title="Feed RSS">
+                            <span class="sprites-rss"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank" data-toggle="tooltip" data-original-title="Siga no Twitter">
+                            <span class="sprites-facebook"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank" data-toggle="tooltip" data-original-title="Página no Plus">
+                            <span class="sprites-instagram"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank" data-toggle="tooltip" data-original-title="Curta no Facebook">
+                            <span class="sprites-twitter"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank" data-toggle="tooltip" data-original-title="Veja no youtube">
+                            <span class="sprites-youtube"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" target="_blank" data-toggle="tooltip" data-original-title="Algo no Linkedin">
+                            <span class="sprites-linkedin"></span>
+                        </a>
+                    </li>
+                </ul>
+                <address>
+                    <p>Rua México, 41 - Sala 1008 - Centro - Rio de Janeiro
+                    <br>CEP: 20031-905
+                    <br>Tel/Fax: (21) 2456-8927</p>
+                </address>
+            </section>
+
+            <section class="footer-lideranca">
+                <h3>Liderança Executiva</h3>
+                <ul>
+                    <li>
+                        <span class="role">Grande Mestre Nacional</span>
+                        <br/> Halee Munoz Gilbert
+                    </li>
+                    <li>
+                        <span class="role">Mestre Conselheiro Nacional</span>
+                        <br/> Nina Pope Hobbs
+                    </li>
+                    <li>
+                        <span class="role">Mestre Conselheiro Nacional Adjunto</span>
+                        <br/> Germane Oneill Lloyd
+                    </li>
+                </ul>
+            </section>
+
+            <section class="footer-menu">
+                <h3>Contato e Institucional</h3>
+                <ul>
+                    <li><a href="#">O que é a Ordem DeMolay</a></li>
+                    <li><a href="#">O Nome "Ordem DeMolay"</a></li>
+                    <li><a href="#">Membros da Diretoria Executiva</a></li>
+                    <li><a href="#">Membros do Gabinente Juvenil Nacional</a></li>
+                    <li><a href="#">Entre em contato com o SCODB</a></li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</footer>
+
+<!-- FOOTER SECOND -->
+<footer id="footer-second">
+    <div class="container">
+        <div class="row">
+            <div class="footer-copyright">
+                <?php echo copyright(); ?> Todos os direitos reservados ao Supremo Conselho da Ordem DeMolay para o Brasil. Este material não pode ser publicado, transmitido por broadcast, reescrito ou redistribuído sem prévia autorização.
+            </div>
+            <div class="footer-developed">
+                <a href="http://www.devim.com.br" target="_blank">
+                    <img class="footer-logo-devim" src="<?php echo get_bloginfo( 'template_directory' ) ?>/assets/images/logo-devim.png" alt="Devim - Desenvolvimento e Gestão Web">
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+
+<!-- AUTO LOAD -->
 <?php wp_footer(); ?>
+
+<!-- LE FACEBOOK -->
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '784313788272475',
+            xfbml      : true,
+            version    : 'v2.1'
+        });
+    };
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/pt_BR/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<!-- LE GOOGLE PLUS -->
+<script type="text/javascript">
+    window.___gcfg = {
+        lang: 'pt-BR'
+    };
+
+    (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+</script>
+
+<!-- LE TWITTER -->
+<script>
+    window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));
+</script>
+
 </body>
 </html>

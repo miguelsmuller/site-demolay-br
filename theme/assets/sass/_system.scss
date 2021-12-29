@@ -1,0 +1,47 @@
+/* # SYSTEM
+================================================== */
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-rendering: optimizeLegibility;
+}
+
+@import "sprites/*.png";
+@include all-sprites-sprites;
+
+
+/* # SYSTEM
+================================================== */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body{
+    overflow-x: hidden;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* # OUTROS
+================================================== */
+.responsive-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+.responsive-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.facebook-container iframe {
+  width: 100% !important;
+}
