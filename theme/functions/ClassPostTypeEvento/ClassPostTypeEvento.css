@@ -1,0 +1,21 @@
+/* # DASHBOARD WIDGET
+================================================== */
+.apresentacao_widget p{
+	text-align: justify;
+	font-size: 14px;
+}
+.apresentacao_widget img{
+	padding: 4px;
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.apresentacao_widget img.alignright{
+	margin-left: 15px;
+}
+.apresentacao_widget img.alignleft{
+	margin-right: 15px;
+}
+.form-table tr{
+    margin-bottom: 15px;
+}
